@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MotoRent - Aluguel de Motos Premium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset e Estilos Globais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #ff6b00;
+            --secondary: #333;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #28a745;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: var(--primary);
+        }
+        
+        p {
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #e05d00;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        /* Navbar */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            padding: 10px 0;
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark);
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        .mobile-reserve-btn {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            font-size: 1.2rem;
+            margin-left: 15px;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-align: left;
+            padding-top: 80px;
+        }
+        
+        .hero-content {
+            max-width: 600px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        /* Seção Destaques */
+        .features {
+            background-color: white;
+        }
+        
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .feature-card {
+            background-color: var(--light);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        /* Seção Coleções */
+        .collections {
+            background-color: #f5f5f5;
+        }
+        
+        .collections-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tab-btn {
+            padding: 10px 25px;
+            background-color: transparent;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .tab-btn:not(.active):hover {
+            background-color: rgba(255, 107, 0, 0.1);
+        }
+        
+        .motos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .moto-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .moto-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .moto-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .moto-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .moto-card:hover .moto-img img {
+            transform: scale(1.1);
+        }
+        
+        .moto-info {
+            padding: 20px;
+        }
+        
+        .moto-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+        
+        .moto-info .moto-type {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .moto-specs {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: #666;
+        }
+        
+        .moto-specs span {
+            display: flex;
+            align-items: center;
+        }
+        
+        .moto-specs i {
+            margin-right: 5px;
+            color: var(--primary);
+        }
+        
+        .moto-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .moto-price span {
+            font-size: 1rem;
+            color: #666;
+            font-weight: normal;
+        }
+        
+        /* Seção Documentação */
+        .documentation {
+            background-color: white;
+        }
+        
+        .docs-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .doc-card {
+            background-color: var(--light);
+            border-radius: 10px;
+            padding: 30px;
+            display: flex;
+            align-items: flex-start;
+            transition: transform 0.3s ease;
+        }
+        
+        .doc-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .doc-icon {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        
+        .doc-content h3 {
+            margin-bottom: 10px;
+        }
+        
+        /* Seção Avaliações */
+        .testimonials {
+            background-color: #f5f5f5;
+        }
+        
+        .testimonials-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .testimonial-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+        
+        .testimonial-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .testimonial-author h4 {
+            margin-bottom: 5px;
+        }
+        
+        .testimonial-author p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .testimonial-rating {
+            color: #ffc107;
+            margin-bottom: 15px;
+        }
+        
+        /* Seção Contato */
+        .contact {
+            background-color: white;
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            margin-top: 50px;
+        }
+        
+        .contact-info h3 {
+            margin-bottom: 20px;
+        }
+        
+        .contact-details {
+            margin-bottom: 30px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .contact-icon {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-right: 15px;
+            margin-top: 3px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .contact-form .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .contact-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .contact-form input,
+        .contact-form textarea,
+        .contact-form select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .contact-form input:focus,
+        .contact-form textarea:focus,
+        .contact-form select:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        
+        .contact-form textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--secondary);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-col h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+        
+        /* Animações */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Responsivo */
+        @media (max-width: 1200px) {
+            .container {
+                width: 95%;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            h2 {
+                font-size: 2rem;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: right 0.3s ease;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-links li {
+                margin: 15px 0;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .mobile-reserve-btn {
+                display: flex;
+            }
+            
+            .btn-primary:not(.hero-buttons .btn-primary) {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            h2::after {
+                width: 40px;
+            }
+            
+            section {
+                padding: 50px 0;
+            }
+            
+            .hero {
+                padding-top: 70px;
+                text-align: center;
+            }
+            
+            .hero-content {
+                margin: 0 auto;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .logo span {
+                font-size: 1.3rem;
+            }
+            
+            .logo-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+            
+            .motos-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .collections-tabs {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 10px;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .collections-tabs::-webkit-scrollbar {
+                display: none;
+            }
+            
+            .tab-btn {
+                white-space: nowrap;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .feature-card {
+                padding: 20px;
+            }
+            
+            .doc-card {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .doc-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">MR</div>
+                <span>MotoRent</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">Início</a></li>
+                <li><a href="#collections">Motos</a></li>
+                <li><a href="#docs">Documentação</a></li>
+                <li><a href="#testimonials">Avaliações</a></li>
+                <li><a href="#contact">Contato</a></li>
+            </ul>
+            <button class="btn btn-primary">Reservar Agora</button>
+            <button class="mobile-reserve-btn" title="Reservar">
+                <i class="fas fa-calendar-alt"></i>
+            </button>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content slide-in-left">
+                <h1>Liberdade sobre duas rodas</h1>
+                <p>Alugue as melhores motos para sua aventura com tarifas a partir de R$99/dia</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary">Ver Motos Disponíveis</button>
+                    <button class="btn btn-secondary">Fale Conosco</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Destaques -->
+    <section class="features">
+        <div class="container">
+            <h2 class="text-center fade-in">Por que escolher a MotoRent?</h2>
+            <p class="text-center fade-in">Oferecemos a melhor experiência de aluguel de motos com serviços premium</p>
+            
+            <div class="features-container">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-motorcycle"></i>
+                    </div>
+                    <h3>Frota Diversificada</h3>
+                    <p>Mais de 100 modelos de motos das principais marcas do mercado</p>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Seguro Completo</h3>
+                    <p>Proteção total inclusa em todos os nossos planos de aluguel</p>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h3>Roteiros Personalizados</h3>
+                    <p>Sugestões de rotas incríveis para explorar com sua moto alugada</p>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Suporte 24/7</h3>
+                    <p>Assistência técnica e emergencial disponível a qualquer momento</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Coleções de Motos -->
+    <section class="collections" id="collections">
+        <div class="container">
+            <h2 class="text-center fade-in">Nossa Frota</h2>
+            <p class="text-center fade-in">Escolha entre nossas categorias premium de motos</p>
+            
+            <div class="collections-tabs fade-in">
+                <button class="tab-btn active" data-category="all">Todas</button>
+                <button class="tab-btn" data-category="sport">Esportivas</button>
+                <button class="tab-btn" data-category="naked">Naked</button>
+                <button class="tab-btn" data-category="touring">Touring</button>
+                <button class="tab-btn" data-category="custom">Custom</button>
+                <button class="tab-btn" data-category="trail">Trail/Adventure</button>
+            </div>
+            
+            <div class="motos-grid">
+                <!-- Honda -->
+                <div class="moto-card fade-in" data-category="sport">
+                    <div class="moto-img">
+                        <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Honda CBR 1000RR">
+                    </div>
+                    <div class="moto-info">
+                        <h3>Honda CBR 1000RR</h3>
+                        <span class="moto-type">Esportiva</span>
+                        <div class="moto-specs">
+                            <span><i class="fas fa-tachometer-alt"></i> 1000cc</span>
+                            <span><i class="fas fa-bolt"></i> 189HP</span>
+                            <span><i class="fas fa-gas-pump"></i> Injeção</span>
+                        </div>
+                        <div class="moto-price">
+                            R$ 299 <span>/dia</span>
+                        </div>
+                        <button class="btn btn-primary">Reservar</button>
+                    </div>
+                </div>
+                
+                <!-- Yamaha -->
+                <div class="moto-card fade-in" data-category="naked">
+                    <div class="moto-img">
+                        <img src="yamaha-mt-09-sp-review-1.jpg" alt="Yamaha MT-09">
+                    </div>
+                    <div class="moto-info">
+                        <h3>Yamaha MT-09</h3>
+                        <span class="moto-type">Naked</span>
+                        <div class="moto-specs">
+                            <span><i class="fas fa-tachometer-alt"></i> 890cc</span>
+                            <span><i class="fas fa-bolt"></i> 119HP</span>
+                            <span><i class="fas fa-gas-pump"></i> Injeção</span>
+                        </div>
+                        <div class="moto-price">
+                            R$ 249 <span>/dia</span>
+                        </div>
+                        <button class="btn btn-primary">Reservar</button>
+                    </div>
+                </div>
+                
+                <!-- BMW -->
+                <div class="moto-card fade-in" data-category="touring">
+                    <div class="moto-img">
+                        <img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="BMW R 1250 RT">
+                    </div>
+                    <div class="moto-info">
+                        <h3>BMW R 1250 RT</h3>
+                        <span class="moto-type">Touring</span>
+                        <div class="moto-specs">
+                            <span><i class="fas fa-tachometer-alt"></i> 1254cc</span>
+                            <span><i class="fas fa-bolt"></i> 136HP</span>
+                            <span><i class="fas fa-gas-pump"></i> Injeção</span>
+                        </div>
+                        <div class="moto-price">
+                            R$ 349 <span>/dia</span>
+                        </div>
+                        <button class="btn btn-primary">Reservar</button>
+                    </div>
+                </div>
+                
+                <!-- Harley-Davidson -->
+                <div class="moto-card fade-in" data-category="custom">
+                    <div class="moto-img">
+                        <img src="https://images.unsplash.com/photo-1558980394-4c7c9299fe96?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Harley-Davidson Street Glide">
+                    </div>
+                    <div class="moto-info">
+                        <h3>Harley-Davidson Street Glide</h3>
+                        <span class="moto-type">Custom</span>
+                        <div class="moto-specs">
+                            <span><i class="fas fa-tachometer-alt"></i> 1868cc</span>
+                            <span><i class="fas fa-bolt"></i> 93HP</span>
+                            <span><i class="fas fa-gas-pump"></i> Injeção</span>
+                        </div>
+                        <div class="moto-price">
+                            R$ 399 <span>/dia</span>
+                        </div>
+                        <button class="btn btn-primary">Reservar</button>
+                    </div>
+                </div>
+                
+                <!-- Ducati -->
+                <div class="moto-card fade-in" data-category="sport">
+                    <div class="moto-img">
+                        <img src="https://images.unsplash.com/photo-1591637333184-19aa84b3e01f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Ducati Panigale V4">
+                    </div>
+                    <div class="moto-info">
+                        <h3>Ducati Panigale V4</h3>
+                        <span class="moto-type">Esportiva</span>
+                        <div class="moto-specs">
+                            <span><i class="fas fa-tachometer-alt"></i> 1103cc</span>
+                            <span><i class="fas fa-bolt"></i> 214HP</span>
+                            <span><i class="fas fa-gas-pump"></i> Injeção</span>
+                        </div>
+                        <div class="moto-price">
+                            R$ 459 <span>/dia</span>
+                        </div>
+                        <button class="btn btn-primary">Reservar</button>
+                    </div>
+                </div>
+                
+                <!-- Kawasaki -->
+                <div class="moto-card fade-in" data-category="trail">
+                    <div class="moto-img">
+                        <img src="versys-06-2019-10.jpg" alt="Kawasaki Versys 1000">
+                    </div>
+                    <div class="moto-info">
+                        <h3>Kawasaki Versys 1000</h3>
+                        <span class="moto-type">Trail/Adventure</span>
+                        <div class="moto-specs">
+                            <span><i class="fas fa-tachometer-alt"></i> 1043cc</span>
+                            <span><i class="fas fa-bolt"></i> 120HP</span>
+                            <span><i class="fas fa-gas-pump"></i> Injeção</span>
+                        </div>
+                        <div class="moto-price">
+                            R$ 279 <span>/dia</span>
+                        </div>
+                        <button class="btn btn-primary">Reservar</button>
+                    </div>
+                </div>
+                
+                <!-- Triumph -->
+                <div class="moto-card fade-in" data-category="naked">
+                    <div class="moto-img">
+                        <img src="IMG_4332.jpg" alt="Triumph Street Triple RS">
+                    </div>
+                    <div class="moto-info">
+                        <h3>Triumph Street Triple RS</h3>
+                        <span class="moto-type">Naked</span>
+                        <div class="moto-specs">
+                            <span><i class="fas fa-tachometer-alt"></i> 765cc</span>
+                            <span><i class="fas fa-bolt"></i> 123HP</span>
+                            <span><i class="fas fa-gas-pump"></i> Injeção</span>
+                        </div>
+                        <div class="moto-price">
+                            R$ 269 <span>/dia</span>
+                        </div>
+                        <button class="btn btn-primary">Reservar</button>
+                    </div>
+                </div>
+                
+                <!-- Suzuki -->
+                <div class="moto-card fade-in" data-category="trail">
+                    <div class="moto-img">
+                        <img src="S0-essai-suzuki-v-strom-1050-nouvel-espoir-622005.jpg" alt="Suzuki V-Strom 1050">
+                    </div>
+                    <div class="moto-info">
+                        <h3>Suzuki V-Strom 1050</h3>
+                        <span class="moto-type">Trail/Adventure</span>
+                        <div class="moto-specs">
+                            <span><i class="fas fa-tachometer-alt"></i> 1037cc</span>
+                            <span><i class="fas fa-bolt"></i> 107HP</span>
+                            <span><i class="fas fa-gas-pump"></i> Injeção</span>
+                        </div>
+                        <div class="moto-price">
+                            R$ 259 <span>/dia</span>
+                        </div>
+                        <button class="btn btn-primary">Reservar</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center fade-in" style="margin-top: 50px;">
+                <button class="btn btn-secondary">Ver Todas as Motos</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documentação Necessária -->
+    <section class="documentation" id="docs">
+        <div class="container">
+            <h2 class="text-center fade-in">Documentação Necessária</h2>
+            <p class="text-center fade-in">Confira os documentos exigidos para alugar uma moto conosco</p>
+            
+            <div class="docs-container">
+                <div class="doc-card fade-in">
+                    <div class="doc-icon">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <div class="doc-content">
+                        <h3>CNH Original</h3>
+                        <p>Carteira Nacional de Habilitação válida e em bom estado de conservação, categoria A.</p>
+                    </div>
+                </div>
+                
+                <div class="doc-card fade-in">
+                    <div class="doc-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <div class="doc-content">
+                        <h3>Cartão de Crédito</h3>
+                        <p>Cartão de crédito internacional (Visa, Mastercard, etc.) em nome do condutor principal.</p>
+                    </div>
+                </div>
+                
+                <div class="doc-card fade-in">
+                    <div class="doc-icon">
+                        <i class="fas fa-file-invoice"></i>
+                    </div>
+                    <div class="doc-content">
+                        <h3>Comprovante de Residência</h3>
+                        <p>Comprovante recente (últimos 3 meses) no nome do condutor principal.</p>
+                    </div>
+                </div>
+                
+                <div class="doc-card fade-in">
+                    <div class="doc-icon">
+                        <i class="fas fa-passport"></i>
+                    </div>
+                    <div class="doc-content">
+                        <h3>Documento de Identidade</h3>
+                        <p>RG ou passaporte original e válido para clientes estrangeiros.</p>
+                    </div>
+                </div>
+                
+                <div class="doc-card fade-in">
+                    <div class="doc-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="doc-content">
+                        <h3>Idade Mínima</h3>
+                        <p>Condutor deve ter no mínimo 21 anos completos e habilitação há pelo menos 2 anos.</p>
+                    </div>
+                </div>
+                
+                <div class="doc-card fade-in">
+                    <div class="doc-icon">
+                        <i class="fas fa-file-signature"></i>
+                    </div>
+                    <div class="doc-content">
+                        <h3>Termo de Responsabilidade</h3>
+                        <p>Termo será assinado no local com as regras de utilização da moto.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Avaliações -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="text-center fade-in">O que nossos clientes dizem</h2>
+            <p class="text-center fade-in">Avaliações reais de quem já viveu a experiência MotoRent</p>
+            
+            <div class="testimonials-container">
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-header">
+                        <div class="testimonial-img">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos Silva">
+                        </div>
+                        <div class="testimonial-author">
+                            <h4>Carlos Silva</h4>
+                            <p>Viajante frequente</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"Aluguei uma BMW R 1250 RT para uma viagem de 7 dias pela Serra Gaúcha. A moto estava impecável e o atendimento foi excelente. Recomendo!"</p>
+                </div>
+                
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-header">
+                        <div class="testimonial-img">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana Paula">
+                        </div>
+                        <div class="testimonial-author">
+                            <h4>Ana Paula</h4>
+                            <p>Primeira locação</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p>"Foi minha primeira experiência alugando uma moto e fiquei impressionada com a qualidade do serviço. A Yamaha MT-09 que peguei era nova e muito bem cuidada."</p>
+                </div>
+                
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-header">
+                        <div class="testimonial-img">
+                            <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Ricardo Almeida">
+                        </div>
+                        <div class="testimonial-author">
+                            <h4>Ricardo Almeida</h4>
+                            <p>Moto entusiasta</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"Já aluguei várias vezes com a MotoRent para testar modelos diferentes antes de comprar. A Ducati Panigale V4 foi sensacional, equipe muito profissional!"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="text-center fade-in">Entre em Contato</h2>
+            <p class="text-center fade-in">Tire suas dúvidas ou faça sua reserva diretamente conosco</p>
+            
+            <div class="contact-container">
+                <div class="contact-info slide-in-left">
+                    <h3>Informações de Contato</h3>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4>Endereço</h4>
+                                <p>Av. das Motos, 1234 - São Paulo/SP</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div>
+                                <h4>Telefone</h4>
+                                <p>(11) 1234-5678</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4>Email</h4>
+                                <p>contato@motorent.com.br</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div>
+                                <h4>Horário de Funcionamento</h4>
+                                <p>Seg-Sex: 8h às 18h<br>Sáb: 9h às 14h</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 style="margin-top: 30px;">Siga-nos</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="contact-form slide-in-right">
+                    <form id="form-contato">
+                        <div class="form-group">
+                            <label for="nome">Nome Completo</label>
+                            <input type="text" id="nome" name="nome" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="telefone">Telefone</label>
+                            <input type="tel" id="telefone" name="telefone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="assunto">Assunto</label>
+                            <select id="assunto" name="assunto" required>
+                                <option value="">Selecione...</option>
+                                <option value="reserva">Reserva de Moto</option>
+                                <option value="duvida">Dúvida</option>
+                                <option value="sugestao">Sugestão</option>
+                                <option value="outro">Outro</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="mensagem">Mensagem</label>
+                            <textarea id="mensagem" name="mensagem" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>MotoRent</h3>
+                    <p>Oferecendo as melhores motos para aluguel desde 2010. Qualidade, segurança e satisfação do cliente são nossas prioridades.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Links Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Início</a></li>
+                        <li><a href="#collections">Motos</a></li>
+                        <li><a href="#docs">Documentação</a></li>
+                        <li><a href="#testimonials">Avaliações</a></li>
+                        <li><a href="#contact">Contato</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Categorias</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" data-category="sport">Esportivas</a></li>
+                        <li><a href="#" data-category="naked">Naked</a></li>
+                        <li><a href="#" data-category="touring">Touring</a></li>
+                        <li><a href="#" data-category="custom">Custom</a></li>
+                        <li><a href="#" data-category="trail">Trail/Adventure</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Newsletter</h3>
+                    <p>Assine para receber ofertas exclusivas e novidades.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Seu email" required>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Assinar</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 MotoRent - Todos os direitos reservados</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Scroll Animation
+        const fadeElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right');
+        
+        const appearOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+        
+        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.classList.add('visible');
+                    appearOnScroll.unobserve(entry.target);
+                }
+            });
+        }, appearOptions);
+        
+        fadeElements.forEach(fadeElement => {
+            appearOnScroll.observe(fadeElement);
+        });
+        
+        // Filter Motos by Category
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const motoCards = document.querySelectorAll('.moto-card');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons
+                tabBtns.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                const category = this.getAttribute('data-category');
+                
+                motoCards.forEach(card => {
+                    if (category === 'all' || card.getAttribute('data-category') === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        const mobileReserveBtn = document.querySelector('.mobile-reserve-btn');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            this.innerHTML = navLinks.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+        
+        // Smooth Scrolling for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                if (this.getAttribute('href') === '#') return;
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Form Submission
+        const contactForm = document.getElementById('form-contato');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Mensagem enviada com sucesso! Entraremos em contato em breve.');
+                this.reset();
+            });
+        }
+        
+        // Mobile reserve button click
+        if (mobileReserveBtn) {
+            mobileReserveBtn.addEventListener('click', function() {
+                document.querySelector('#contact').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        }
+    </script>
+</body>
+</html>
